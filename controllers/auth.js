@@ -12,24 +12,27 @@ module.exports.getDetails = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-  var scopes = 'user-read-private user-read-email';
+  var scopes =
+    'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
+
+  const redirectUri = 'http://localhost:8000/api/v1/auth/redirect';
+
   res.redirect(
     'https://accounts.spotify.com/authorize' +
-      '?response_type=code' +
-      '&client_id=' +
+      '?client_id=' +
       env.client_id +
-      (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
       '&redirect_uri=' +
-      encodeURIComponent('http://localhost:8000/api/v1/auth/redirect')
+      redirectUri +
+      '&scope=' +
+      encodeURIComponent(scopes) +
+      '&response_type=token' +
+      '&state=123'
   );
 };
 
 module.exports.redirectCode = (req, res) => {
-  console.log(req.query.code);
+  console.log(req.query.access_token);
   return res.status(200).json({
-    access_code: req.query.code,
+    access_code: req.query.access_token,
   });
 };
-
-// http://localhost:8000/api/v1/?
-// code=AQA_Fmj6XA2SBpcEoVwo13vI4fHJVOLK0JovzecCmt9e009yKsLB9pu_e__IGHMGiS_xOY20qH2_ntsYZcaHSL39OJyKHh4bG0poh7zljZerHYvtHEcnUXow4j6yvIveQFUxBF6CSSEpD47SJRxJk_xfyiOSPbitLQcZ7Zrp3vYxKNG75Jn_jUHbobhcJ331SDVCXUVyy7tmTh6VXid1cOAMGew0
