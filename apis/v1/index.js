@@ -1,9 +1,8 @@
 const router = require('express').Router();
+const authControllers = require('../../controllers/auth');
 
-router.get('/', (req, res) => {
-  return res.status(200).json({
-    message: 'Success',
-  });
-});
+router.get('/', authControllers.getDetails);
+router.get('/login', authControllers.login);
+router.get('/auth/redirect', authControllers.redirectCode);
 
 module.exports = router;
