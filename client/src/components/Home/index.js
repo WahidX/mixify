@@ -1,32 +1,41 @@
+import React, { useContext } from 'react';
+
 import { Button } from '@material-ui/core';
-import React from 'react';
-import axios from 'axios';
+import { TokenContext } from '../../contexts/TokenContext';
+import { LoadingContext } from '../../contexts/LoadingContext';
+
+import urls from '../../utils/urls';
+import { checkAuth } from '../../utils';
+import { Link } from 'react-router-dom';
+import {
+  createLinkHandler,
+  joinLinkHandler,
+} from '../../adapters/linkHandlers';
 
 function Home(props) {
-  let handleAuth = () => {
-    console.log('clicked');
-    var config = {
-      url: 'http://localhost:8000/api/v1',
-      method: 'get',
-    };
+  const [token, setToken] = useContext(TokenContext);
+  const [loading, setLoading] = useContext(LoadingContext);
 
-    axios(config)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log('error', err);
-      });
-
-    console.log('done');
-  };
+  setToken(checkAuth(token));
 
   return (
     <div>
       <h1>Home</h1>
-      <Button variant="outlined" onClick={handleAuth}>
-        Get auth
-      </Button>
+
+      {token ? (
+        <React.Fragment>
+          <Link to="/playlist" onClick={createLinkHandler}>
+            <Button variant="outlined">Create Party</Button>
+          </Link>
+          <Link to="/playlist" onClick={joinLinkHandler}>
+            <Button variant="outlined">Join Party</Button>
+          </Link>
+        </React.Fragment>
+      ) : (
+        <a href={urls.loginSpotify()}>
+          <Button variant="outlined">connect your spotify</Button>
+        </a>
+      )}
     </div>
   );
 }

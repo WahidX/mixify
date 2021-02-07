@@ -1,12 +1,12 @@
 import React from 'react';
 
-function PlaylistPage(props) {
+function PlayListPage(props) {
   return (
     <div>
-      <h1>PlaylistPage</h1>
-      <h1>PlaylistPage</h1>
+      <h1>PlayListPage</h1>
+      <h1>PlayListPage</h1>
     </div>
   );
 }
 
-export default PlaylistPage;
+export default PlayListPage;
