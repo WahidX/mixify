@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const authControllers = require('../../controllers/auth');
+const authController = require('../../controllers/auth_controller');
+const linkController = require('../../controllers/link_controller');
 
-router.get('/', authControllers.getDetails);
-router.get('/login', authControllers.login);
-router.get('/auth/redirect', authControllers.redirectCode);
+// router.get('/auth/redirect', authControllers.redirectCode); // will check the state of redirect url later
+router.get('/login', authController.login);
+router.post('/create', linkController.createLink);
+router.post('/join/:linkid', linkController.joinLink);
 
 module.exports = router;

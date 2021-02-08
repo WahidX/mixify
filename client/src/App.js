@@ -3,21 +3,18 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import PlayListPage from './components/PlaylistPage';
 
-import { TokenProvider } from './contexts/TokenContext';
-import { LoadingProvider } from './contexts/LoadingContext';
+import { AppDataProvider } from './contexts/AppDataContext';
 
 function App(props) {
   return (
-    <LoadingProvider>
-      <TokenProvider>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/playlist" component={PlayListPage} />
-          </Switch>
-        </Router>
-      </TokenProvider>
-    </LoadingProvider>
+    <AppDataProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/playlist" component={PlayListPage} />
+        </Switch>
+      </Router>
+    </AppDataProvider>
   );
 }
 

@@ -1,22 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, TextField } from '@material-ui/core';
 
-import { Button } from '@material-ui/core';
-import { TokenContext } from '../../contexts/TokenContext';
-import { LoadingContext } from '../../contexts/LoadingContext';
-
+import { AppDataContext } from '../../contexts/AppDataContext';
 import urls from '../../utils/urls';
-import { checkAuth } from '../../utils';
 import { Link } from 'react-router-dom';
+import { checkAuth } from '../../utils';
 import {
   createLinkHandler,
   joinLinkHandler,
 } from '../../adapters/linkHandlers';
 
 function Home(props) {
-  const [token, setToken] = useContext(TokenContext);
-  const [loading, setLoading] = useContext(LoadingContext);
+  const [appData, setAppData] = useContext(AppDataContext);
+  let token = appData.token;
 
-  setToken(checkAuth(token));
+  console.log(appData);
+
+  useEffect(() => {
+    // getting token from redirect url
+    if (window.location.hash && !token) {
+      setAppData((prev) => {
+        return {
+          ...prev,
+          token: checkAuth(token),
+        };
+      });
+    }
+  }, []);
+
+  const [link, setLink] = useState('');
 
   return (
     <div>
@@ -24,12 +36,20 @@ function Home(props) {
 
       {token ? (
         <React.Fragment>
-          <Link to="/playlist" onClick={createLinkHandler}>
+          <Link to="/playlist" onClick={() => createLinkHandler(token)}>
             <Button variant="outlined">Create Party</Button>
           </Link>
-          <Link to="/playlist" onClick={joinLinkHandler}>
-            <Button variant="outlined">Join Party</Button>
-          </Link>
+          <form>
+            <Link to="/playlist" onClick={() => joinLinkHandler(token, link)}>
+              <Button variant="outlined">Join Party</Button>
+            </Link>
+            <TextField
+              variant="filled"
+              label="Paste your link"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+            />
+          </form>
         </React.Fragment>
       ) : (
         <a href={urls.loginSpotify()}>

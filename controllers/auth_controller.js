@@ -13,9 +13,9 @@ module.exports.getDetails = (req, res) => {
 
 module.exports.login = (req, res) => {
   var scopes =
-    'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
+    'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
 
-  const redirectUri = 'http://localhost:8000/api/v1/auth/redirect';
+  const redirectUri = 'http://localhost:3000/';
 
   res.redirect(
     'https://accounts.spotify.com/authorize' +
@@ -30,9 +30,11 @@ module.exports.login = (req, res) => {
   );
 };
 
-module.exports.redirectCode = (req, res) => {
-  console.log(req.query.access_token);
-  return res.status(200).json({
-    access_code: req.query.access_token,
-  });
-};
+// ONLY WORKS ON FRONTEND BROWSERS
+// module.exports.redirectCode = (req, res) => {
+//   console.log(req);
+//   return res.status(200).json({
+//     access_code: req.query.access_token,
+//   });
+//   // res.redirect(`http://localhost:3000`);
+// };
