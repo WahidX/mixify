@@ -2,9 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import urls from '../utils/urls';
 
-export const createLinkHandler = (token) => {
-  console.log('have to tell backend to create');
-
+export const createLinkHandler = (token, setAppData) => {
   var config = {
     method: 'post',
     url: urls.createLink(),
@@ -16,20 +14,37 @@ export const createLinkHandler = (token) => {
     }),
   };
 
+  setAppData((prev) => {
+    return {
+      ...prev,
+      loading: true,
+    };
+  });
+
   axios(config)
     .then((response) => {
-      console.log(response.data);
+      setAppData((prev) => {
+        return {
+          ...prev,
+          linkid: response.data.linkid,
+          loading: false,
+          joined: true,
+        };
+      });
     })
     .catch((err) => {
       console.log('Err: ', err);
+      setAppData((prev) => {
+        return {
+          ...prev,
+          loading: false,
+          error: err,
+        };
+      });
     });
 };
 
-export const joinLinkHandler = (token, link) => {
-  console.log('have to tell backend to join');
-
-  console.log('link', link);
-
+export const joinLinkHandler = (token, link, setAppData) => {
   var config = {
     method: 'post',
     url: urls.joinLink(link),
@@ -41,11 +56,32 @@ export const joinLinkHandler = (token, link) => {
     }),
   };
 
+  setAppData((prev) => {
+    return {
+      ...prev,
+      loading: true,
+    };
+  });
+
   axios(config)
     .then((response) => {
-      console.log(response.data);
+      setAppData((prev) => {
+        return {
+          ...prev,
+          linkid: link,
+          loading: false,
+          joined: true,
+        };
+      });
     })
     .catch((err) => {
       console.log('Err: ', err);
+      setAppData((prev) => {
+        return {
+          ...prev,
+          loading: false,
+          error: err,
+        };
+      });
     });
 };

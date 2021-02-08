@@ -3,7 +3,7 @@ import { Button, TextField } from '@material-ui/core';
 
 import { AppDataContext } from '../../contexts/AppDataContext';
 import urls from '../../utils/urls';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { checkAuth } from '../../utils';
 import {
   createLinkHandler,
@@ -12,7 +12,10 @@ import {
 
 function Home(props) {
   const [appData, setAppData] = useContext(AppDataContext);
+  const [link, setLink] = useState('');
+
   let token = appData.token;
+  let loading = appData.loading;
 
   console.log(appData);
 
@@ -28,24 +31,36 @@ function Home(props) {
     }
   }, []);
 
-  const [link, setLink] = useState('');
+  if (appData.joined) {
+    return <Redirect to="/playlist" />;
+  }
 
   return (
     <div>
       <h1>Home</h1>
-
+      {loading && 'loading'}
       {token ? (
         <React.Fragment>
-          <Link to="/playlist" onClick={() => createLinkHandler(token)}>
-            <Button variant="outlined">Create Party</Button>
-          </Link>
+          <Button
+            variant="outlined"
+            disabled={loading}
+            onClick={() => createLinkHandler(token, setAppData)}
+          >
+            Create Party
+          </Button>
+
           <form>
-            <Link to="/playlist" onClick={() => joinLinkHandler(token, link)}>
-              <Button variant="outlined">Join Party</Button>
-            </Link>
+            <Button
+              variant="outlined"
+              disabled={loading}
+              onClick={() => joinLinkHandler(token, link, setAppData)}
+            >
+              Join Party
+            </Button>
             <TextField
               variant="filled"
               label="Paste your link"
+              disabled={loading}
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />

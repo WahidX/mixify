@@ -5,6 +5,7 @@ let urls = {
   redirectUrl: () => `${base_url}/auth/redirect`,
   createLink: () => `${base_url}/create`,
   joinLink: (link) => `${base_url}/join/${link}`,
+  fetchPlaylists: () => `https://api.spotify.com/v1/me/playlists`,
 };
 
 export default urls;

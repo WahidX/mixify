@@ -6,7 +6,10 @@ export const AppDataProvider = (props) => {
   const [appData, setAppData] = useState({
     token: '',
     loading: false,
-    linkId: '',
+    linkid: '',
+    error: null,
+    joined: false,
+    playlists: [],
   });
 
   return (
