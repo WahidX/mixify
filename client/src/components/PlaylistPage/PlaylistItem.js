@@ -1,16 +1,30 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 
 function PlaylistItem(props) {
   let playlist = props.playlist;
 
-  console.log(playlist);
+  //   console.log(playlist);
 
   return (
-    <div>
-      <img src={playlist.images[0].url} alt={playlist.name} width="100"></img>
-      <h1>{playlist.name}</h1>
-      <h1>{playlist.owner.display_name}</h1>
-    </div>
+    <React.Fragment>
+      <div class="playlist-item-container">
+        <img src={playlist.images[0].url} alt={playlist.name}></img>
+
+        <div className="items-mid">
+          <Typography>{playlist.name}</Typography>
+          <Typography variant="caption">
+            {playlist.owner.display_name}
+          </Typography>
+        </div>
+      </div>
+
+      <div className="item-right">
+        <Typography variant="caption">
+          No of songs: {playlist.tracks.total}
+        </Typography>
+      </div>
+    </React.Fragment>
   );
 }
 
