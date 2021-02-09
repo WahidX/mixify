@@ -39,8 +39,6 @@ function PlayListPage(props) {
     setSelected(newChecked);
   };
 
-  let submitted = false;
-
   let submitPlaylists = () => {
     console.log(selected);
     if (selected.length > 0)
@@ -81,7 +79,7 @@ function PlayListPage(props) {
               id="create-mix-btn"
               variant="outlined"
               color="secondary"
-              disabled={loading && !(selected.length > 0)}
+              disabled={loading || !(selected.length > 0)}
               onClick={submitPlaylists}
             >
               {loading ? 'loading...' : 'Create MiX'}
@@ -92,10 +90,10 @@ function PlayListPage(props) {
         <Button
           id="clear-btn"
           variant="outlined"
-          disabled={loading}
+          disabled={loading || selected.length === 0}
           onClick={() => setSelected([])}
         >
-          {loading ? 'loading...' : 'Clear Selections'}
+          {loading ? 'loading...' : 'Clear All'}
         </Button>
       </div>
 

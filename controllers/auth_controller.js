@@ -29,12 +29,3 @@ module.exports.login = (req, res) => {
       '&state=123'
   );
 };
-
-// ONLY WORKS ON FRONTEND BROWSERS
-// module.exports.redirectCode = (req, res) => {
-//   console.log(req);
-//   return res.status(200).json({
-//     access_code: req.query.access_token,
-//   });
-//   // res.redirect(`http://localhost:3000`);
-// };

@@ -6,6 +6,7 @@ let urls = {
   createLink: () => `${base_url}/create`,
   joinLink: (link) => `${base_url}/join/${link}`,
   fetchPlaylists: () => `https://api.spotify.com/v1/me/playlists`,
+  submitPlaylist: () => `${base_url}/playlist/submit`,
 };
 
 export default urls;

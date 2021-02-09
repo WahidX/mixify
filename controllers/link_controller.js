@@ -1,10 +1,11 @@
 const axios = require('axios');
 const Mix = require('../models/Mix');
+const utils = require('../configs/utils');
 
 const checkAccessCodeValidity = async (access_token) => {
   var config = {
     method: 'get',
-    url: 'https://api.spotify.com/v1/me',
+    url: utils.urls.getUser(),
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + access_token,

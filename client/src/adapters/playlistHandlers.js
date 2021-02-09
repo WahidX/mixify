@@ -41,3 +41,35 @@ export const fetchPlaylists = (token, setAppData) => {
       });
     });
 };
+
+export const submitPlaylists = (playlists, token) => {
+  // concatinating playlist uris
+  let playlistsSTR = '';
+  playlists.map((item) => {
+    console.log(item);
+    playlistsSTR += item + '|';
+  });
+  playlistsSTR = playlistsSTR.slice(0, playlistsSTR.length - 1);
+
+  // console.log('sending PLlist: ', playlistsSTR);
+
+  var config = {
+    method: 'post',
+    url: urls.submitPlaylist(),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data: qs.stringify({
+      access_token: token,
+      playlists: playlistsSTR,
+    }),
+  };
+
+  axios(config)
+    .then((response) => {
+      console.log('res: ', response.data);
+    })
+    .catch((err) => {
+      console.log('Err: ', err);
+    });
+};
