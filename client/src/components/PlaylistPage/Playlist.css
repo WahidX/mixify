@@ -11,6 +11,12 @@
   margin: 10px 0px;
 }
 
+#playlist-page #util-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .playlist-item-container {
   width: 100%;
   display: flex;

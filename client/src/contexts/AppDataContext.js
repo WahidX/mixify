@@ -10,6 +10,7 @@ export const AppDataProvider = (props) => {
     error: null,
     joined: false,
     playlists: [],
+    selected: [],
   });
 
   return (
