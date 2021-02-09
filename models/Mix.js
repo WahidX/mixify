@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 const mixSchema = new mongoose.Schema(
   {
     creator: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
     },
     users: [
       {
-        type: String,
-        required: true,
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
       },
     ],
     explicit_filter: {
       type: Boolean,
       default: false,
     },
-    songs: [
+    tracks: [
       {
-        type: String,
-        required: false,
+        type: mongoose.Schema.ObjectId,
+        ref: 'Track',
       },
     ],
   },
