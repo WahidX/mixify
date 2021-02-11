@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Mix = require('../models/Mix');
 const utils = require('../configs/utils');
+const User = require('../models/user');
 
 const checkAccessCodeValidity = async (access_token) => {
   var config = {
@@ -15,21 +16,49 @@ const checkAccessCodeValidity = async (access_token) => {
   return axios(config);
 };
 
+let storeUser = async (userResponse) => {
+  try {
+    let user = await User.findOne({
+      spotify_id: userResponse.id,
+    });
+
+    if (!user) {
+      user = await User.create({
+        spotify_id: userResponse.id,
+        name: userResponse.display_name,
+        img: userResponse.images.length !== 0 ? userResponse.images[0].url : '', //img can be empty
+        explicit_content: userResponse.explicit_content.filter_enabled,
+      });
+    }
+
+    return user;
+  } catch (err) {
+    return false;
+  }
+};
+
 module.exports.createLink = async (req, res) => {
   checkAccessCodeValidity(req.body.access_token)
     .then(async (response) => {
-      let user = response.data;
+      try {
+        let user = await storeUser(response.data);
 
-      let newMix = await Mix.create({
-        creator: user.id,
-        explicit_filter: user.explicit_content.filter_enabled,
-        users: [user.id],
-      });
+        let newMix = await Mix.create({
+          creator: user._id,
+          explicit_filter: user.explicit_filter,
+          users: [user._id],
+        });
 
-      return res.status(200).json({
-        message: 'New Mix Created',
-        linkid: newMix._id,
-      });
+        return res.status(200).json({
+          message: 'New Mix Created',
+          linkid: newMix._id,
+        });
+      } catch (err) {
+        console.log('Err: ', err);
+        return res.status(501).json({
+          message: 'Internal Server Error',
+        });
+      }
     })
     .catch((err) => {
       console.log('ERRR: ', err);
@@ -42,7 +71,8 @@ module.exports.createLink = async (req, res) => {
 module.exports.joinLink = async (req, res) => {
   checkAccessCodeValidity(req.body.access_token)
     .then(async (response) => {
-      let user = response.data;
+      let user = await storeUser(response.data);
+
       let linkid = req.params.linkid;
 
       if (!linkid) {
@@ -54,11 +84,10 @@ module.exports.joinLink = async (req, res) => {
       let mix = await Mix.findById(linkid);
 
       // checking if the user already joined
-      if (mix.users.indexOf(user.id) === -1) {
-        // means not joined yet
-        mix.users.push(user.id);
-        mix.explicit_filter =
-          mix.explicit_filter && user.explicit_content.filter_enabled;
+      if (mix.users.indexOf(user._id) === -1) {
+        // not joined yet
+        mix.users.push(user._id);
+        mix.explicit_filter = mix.explicit_filter && user.explicit_filter;
         mix.save();
       }
 

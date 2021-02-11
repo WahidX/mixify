@@ -12,6 +12,9 @@ const userSchema = new mongoose.Schema(
     img: {
       type: String,
     },
+    explicit_content: {
+      type: Boolean,
+    },
     playlists: [
       {
         type: mongoose.Schema.ObjectId,
