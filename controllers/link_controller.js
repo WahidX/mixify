@@ -28,6 +28,7 @@ let storeUser = async (userResponse) => {
         name: userResponse.display_name,
         img: userResponse.images.length !== 0 ? userResponse.images[0].url : '', //img can be empty
         explicit_content: userResponse.explicit_content.filter_enabled,
+        playlists: [],
       });
     }
 
@@ -52,6 +53,7 @@ module.exports.createLink = async (req, res) => {
         return res.status(200).json({
           message: 'New Mix Created',
           linkid: newMix._id,
+          userID: user.spotify_id,
         });
       } catch (err) {
         console.log('Err: ', err);
@@ -93,6 +95,7 @@ module.exports.joinLink = async (req, res) => {
 
       return res.status(200).json({
         message: 'Joined party!',
+        userID: user.spotify_id,
       });
     })
     .catch((err) => {

@@ -28,7 +28,9 @@ export const createLinkHandler = (token, setAppData) => {
           ...prev,
           linkid: response.data.linkid,
           loading: false,
+          created: true,
           joined: true,
+          userID: response.data.userID,
         };
       });
     })
@@ -71,6 +73,7 @@ export const joinLinkHandler = (token, link, setAppData) => {
           linkid: link,
           loading: false,
           joined: true,
+          userID: response.data.userID,
         };
       });
     })

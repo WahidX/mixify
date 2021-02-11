@@ -11,7 +11,9 @@ function PlaylistCreate(props) {
     <div>
       <Button
         variant="outlined"
-        onClick={() => submitPlaylists(appData.selected, appData.token)}
+        onClick={() =>
+          submitPlaylists(appData.selected, appData.token, appData.userID)
+        }
       >
         Submit
       </Button>

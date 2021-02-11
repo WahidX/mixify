@@ -11,6 +11,8 @@ export const AppDataProvider = (props) => {
     joined: false,
     playlists: [],
     selected: [],
+    userID: null,
+    created: false,
   });
 
   return (

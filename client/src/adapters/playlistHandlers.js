@@ -42,7 +42,7 @@ export const fetchPlaylists = (token, setAppData) => {
     });
 };
 
-export const submitPlaylists = (playlists, token) => {
+export const submitPlaylists = (playlists, token, userID) => {
   // concatinating playlist uris
   let playlistsSTR = '';
   playlists.map((item) => {
@@ -51,7 +51,7 @@ export const submitPlaylists = (playlists, token) => {
   });
   playlistsSTR = playlistsSTR.slice(0, playlistsSTR.length - 1);
 
-  // console.log('sending PLlist: ', playlistsSTR);
+  console.log('sending PLlist: ', userID);
 
   var config = {
     method: 'post',
@@ -62,6 +62,7 @@ export const submitPlaylists = (playlists, token) => {
     data: qs.stringify({
       access_token: token,
       playlists: playlistsSTR,
+      userID: userID,
     }),
   };
 
