@@ -40,7 +40,6 @@ function PlayListPage(props) {
   };
 
   let submitPlaylists = () => {
-    console.log(selected);
     if (selected.length > 0)
       setAppData((prev) => {
         return {

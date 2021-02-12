@@ -75,6 +75,7 @@ module.exports.getTracks = async (req, res) => {
       });
 
       if (user) {
+        user.playlists = [];
         for (let i = 0; i < playlists.length; i++) {
           let playlistData = await fetchPlaylistTracks(
             playlists[i],
@@ -86,8 +87,11 @@ module.exports.getTracks = async (req, res) => {
 
             playlist.tracks = tracks;
             playlist.save();
+            user.playlists.push(playlist._id);
           }
         }
+
+        user.save(); // saving the playlists
 
         return res.status(200).json({
           message: 'ok',

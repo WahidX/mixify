@@ -30,6 +30,9 @@ let storeUser = async (userResponse) => {
         explicit_content: userResponse.explicit_content.filter_enabled,
         playlists: [],
       });
+    } else {
+      user.playlists = [];
+      user.save();
     }
 
     return user;

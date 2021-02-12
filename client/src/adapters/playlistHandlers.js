@@ -21,7 +21,6 @@ export const fetchPlaylists = (token, setAppData) => {
 
   axios(config)
     .then((response) => {
-      console.log('plist: ', response.data);
       setAppData((prev) => {
         return {
           ...prev,
@@ -42,7 +41,7 @@ export const fetchPlaylists = (token, setAppData) => {
     });
 };
 
-export const submitPlaylists = (playlists, token, userID) => {
+export const submitPlaylists = (playlists, token, userID, setAppData) => {
   // concatinating playlist uris
   let playlistsSTR = '';
   playlists.map((item) => {
@@ -52,6 +51,13 @@ export const submitPlaylists = (playlists, token, userID) => {
   playlistsSTR = playlistsSTR.slice(0, playlistsSTR.length - 1);
 
   console.log('sending PLlist: ', userID);
+
+  setAppData((prev) => {
+    return {
+      ...prev,
+      loading: true,
+    };
+  });
 
   var config = {
     method: 'post',
@@ -69,8 +75,20 @@ export const submitPlaylists = (playlists, token, userID) => {
   axios(config)
     .then((response) => {
       console.log('res: ', response.data);
+      setAppData((prev) => {
+        return {
+          ...prev,
+          loading: false,
+        };
+      });
     })
     .catch((err) => {
       console.log('Err: ', err);
+      setAppData((prev) => {
+        return {
+          ...prev,
+          loading: false,
+        };
+      });
     });
 };
