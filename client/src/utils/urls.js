@@ -7,6 +7,7 @@ let urls = {
   joinLink: (link) => `${base_url}/join/${link}`,
   fetchPlaylists: () => `https://api.spotify.com/v1/me/playlists`,
   submitPlaylist: () => `${base_url}/playlist/submit`,
+  refreshRoom: (id) => `${base_url}/mix/refresh/${id}`,
 };
 
 export default urls;

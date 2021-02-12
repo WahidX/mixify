@@ -4,6 +4,7 @@ import Home from './components/Home';
 import PlayListPage from './components/PlaylistPage';
 import PlaylistCreate from './components/PlaylistCreate';
 import Page404 from './components/Page404';
+import Header from './components/shared/Header';
 
 import { AppDataProvider } from './contexts/AppDataContext';
 
@@ -11,6 +12,7 @@ function App(props) {
   return (
     <AppDataProvider>
       <Router>
+        <Header />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/playlist" component={PlayListPage} />
