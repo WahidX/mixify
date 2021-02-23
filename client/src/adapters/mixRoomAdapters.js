@@ -17,7 +17,6 @@ export const refreshRoom = (id, setAppData) => {
 
   axios(config)
     .then((response) => {
-      console.log(response.data);
       setAppData((prev) => {
         return {
           ...prev,

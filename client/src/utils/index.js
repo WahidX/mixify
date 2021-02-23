@@ -1,6 +1,7 @@
 export const getHashParams = () => {
   let params = {};
-  let token = window.location.hash
+  console.log('hash: ', window.location.hash);
+  let hashString = window.location.hash
     .replace('#', '')
     .split('&')
     .map((item) => {
@@ -13,6 +14,6 @@ export const getHashParams = () => {
 
 export const checkAuth = (token) => {
   if (token) return token;
-  let a_token = getHashParams()['access_token'];
-  return a_token;
+  let hashParams = getHashParams();
+  return [hashParams['access_token'], hashParams['state']];
 };

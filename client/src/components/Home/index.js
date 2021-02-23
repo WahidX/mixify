@@ -16,20 +16,27 @@ function Home(props) {
 
   let token = appData.token;
   let loading = appData.loading;
-
   console.log(appData);
 
   useEffect(() => {
     // getting token from redirect url
     if (window.location.hash && !token) {
+      let [a_token, linkid] = checkAuth(token);
       setAppData((prev) => {
         return {
           ...prev,
-          token: checkAuth(token),
+          token: a_token,
+          linkid: linkid,
         };
       });
     }
   }, []);
+
+  // for invited ones
+  useEffect(() => {
+    if (appData.linkid)
+      joinLinkHandler(appData.token, appData.linkid, setAppData);
+  }, [appData.linkid]);
 
   if (appData.joined) {
     return <Redirect to="/playlist" />;
@@ -67,7 +74,7 @@ function Home(props) {
           </form>
         </React.Fragment>
       ) : (
-        <a href={urls.loginSpotify()}>
+        <a href={urls.loginSpotify(0)}>
           <Button variant="outlined">connect your spotify</Button>
         </a>
       )}

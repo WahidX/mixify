@@ -16,6 +16,7 @@ module.exports.login = (req, res) => {
     'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
 
   const redirectUri = 'http://localhost:3000/';
+  const linkid = req.params.linkid || 0;
 
   res.redirect(
     'https://accounts.spotify.com/authorize' +
@@ -26,6 +27,6 @@ module.exports.login = (req, res) => {
       '&scope=' +
       encodeURIComponent(scopes) +
       '&response_type=token' +
-      '&state=123'
+      `&state=${linkid}`
   );
 };

@@ -12,6 +12,7 @@ import PlaylistItem from './PlaylistItem';
 import { AppDataContext } from '../../contexts/AppDataContext';
 import { Link, Redirect } from 'react-router-dom';
 import { fetchPlaylists } from '../../adapters/playlistHandlers';
+import urls from '../../utils/urls';
 
 function PlayListPage(props) {
   const [appData, setAppData] = useContext(AppDataContext);
@@ -55,12 +56,20 @@ function PlayListPage(props) {
 
   return (
     <div id="playlist-page">
-      <Button
-        variant="contained"
-        onClick={() => navigator.clipboard.writeText(linkid)}
-      >
-        Copy Link
-      </Button>
+      <div className="copy-div">
+        <Button
+          variant="contained"
+          onClick={() => navigator.clipboard.writeText(urls.roomUrl(linkid))}
+        >
+          Room URL
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => navigator.clipboard.writeText(linkid)}
+        >
+          Room CODE
+        </Button>
+      </div>
 
       <div id="util-btns">
         <Button

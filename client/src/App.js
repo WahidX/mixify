@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import Home from './components/Home';
 import PlayListPage from './components/PlaylistPage';
 import PlaylistCreate from './components/PlaylistCreate';
 import Page404 from './components/Page404';
 import Header from './components/shared/Header';
+import InviteRoom from './components/InviteRoom';
 
 import { AppDataProvider } from './contexts/AppDataContext';
 
@@ -17,6 +19,7 @@ function App(props) {
           <Route exact path="/" component={Home} />
           <Route exact path="/playlist" component={PlayListPage} />
           <Route exact path="/create" component={PlaylistCreate} />
+          <Route path="/room" component={InviteRoom} />
           <Route component={Page404} />
         </Switch>
       </Router>

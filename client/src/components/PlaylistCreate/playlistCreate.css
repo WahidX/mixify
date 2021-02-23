@@ -4,7 +4,7 @@
   justify-content: space-around;
 }
 
-#left-container {
+#page-container {
   width: 50%;
   min-width: 600px;
   display: flex;
@@ -13,7 +13,7 @@
   margin-top: 10px;
 }
 
-#left-container > * {
+#page-container > * {
   margin: 10px 0px;
 }
 
