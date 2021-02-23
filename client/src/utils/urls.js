@@ -10,6 +10,7 @@ let urls = {
   submitPlaylist: () => `${base_url}/playlist/submit`,
   refreshRoom: (id) => `${base_url}/mix/refresh/${id}`,
   roomUrl: (linkid) => `${base_frontend}/room/${linkid}`,
+  createMix: () => `${base_url}/mix/create`,
 };
 
 export default urls;

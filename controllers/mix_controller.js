@@ -25,3 +25,68 @@ module.exports.getUsers = async (req, res) => {
     });
   }
 };
+
+module.exports.createMix = async (req, res) => {
+  // req.body {
+  //   access_token,
+  //   userID,
+  //   linkid,
+  //   playlistName,
+  //   pattern,
+  //   excludeExplicit
+  // }
+
+  let mixRoom = await Mix.findById(req.body.linkid)
+    .populate({
+      path: 'users',
+      populate: {
+        path: 'playlists',
+        populate: {
+          path: 'tracks',
+        },
+      },
+    })
+    .populate({
+      path: 'creator',
+    });
+
+  if (!mixRoom) {
+    return res.status(404).json({
+      message: 'No room found',
+    });
+  }
+
+  if (mixRoom.creator.spotify_id !== req.body.userID) {
+    return res.status(401).json({
+      message: 'Only Creator can create the playlist',
+    });
+  }
+
+  console.log(mixRoom.users);
+  patternExecute(req.body.pattern);
+
+  return res.status(200).json({
+    message: 'ok',
+  });
+};
+
+let patternExecute = (pattern) => {
+  const patterns = {
+    smart: smartPattern,
+    equal: equalPattern,
+    random: randomPattern,
+  };
+  patterns[pattern]();
+};
+
+let smartPattern = () => {
+  console.log('Smart');
+};
+
+let equalPattern = () => {
+  console.log('Equal');
+};
+
+let randomPattern = () => {
+  console.log('Random');
+};

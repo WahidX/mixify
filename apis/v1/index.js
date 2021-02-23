@@ -10,5 +10,6 @@ router.post('/create', linkController.createLink);
 router.post('/join/:linkid', linkController.joinLink);
 router.post('/playlist/submit', playlistController.getTracks);
 router.get('/mix/refresh/:id', mixController.getUsers);
+router.post('/mix/create', mixController.createMix);
 
 module.exports = router;

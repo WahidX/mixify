@@ -17,7 +17,7 @@ import {
 import { Redirect } from 'react-router-dom';
 import { AppDataContext } from '../../contexts/AppDataContext';
 
-import { submitPlaylists } from '../../adapters/playlistHandlers';
+import { createMix, submitPlaylists } from '../../adapters/playlistHandlers';
 import './playlistCreate.css';
 import { refreshRoom } from '../../adapters/mixRoomAdapters';
 import PersonIcon from '@material-ui/icons/Person';
@@ -27,6 +27,8 @@ import urls from '../../utils/urls';
 function PlaylistCreate(props) {
   const [appData, setAppData] = useContext(AppDataContext);
   const [pattern, setPattern] = useState('');
+  const [playlistName, setPlaylistName] = useState('');
+  const [excludeExplicit, setExcludeExplicit] = useState(false);
 
   const linkid = appData.linkid;
   let selected = appData.selected;
@@ -81,7 +83,12 @@ function PlaylistCreate(props) {
 
       {created && (
         <React.Fragment>
-          <TextField variant="outlined" label="Playlist Name" />
+          <TextField
+            variant="outlined"
+            label="Playlist Name"
+            value={playlistName}
+            onChange={(e) => setPlaylistName(e.target.value)}
+          />
           Sorting Pattern :
           <RadioGroup
             name="pattern"
@@ -98,9 +105,27 @@ function PlaylistCreate(props) {
             />
           </RadioGroup>
           <div className="form-items">
-            <Checkbox /> Exclude explicit contents
+            <Checkbox
+              value={excludeExplicit}
+              onChange={() => setExcludeExplicit(!excludeExplicit)}
+            />{' '}
+            Exclude explicit contents
           </div>
-          <Button variant="outlined" color="secondary">
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() =>
+              createMix(
+                linkid,
+                playlistName,
+                pattern,
+                excludeExplicit,
+                appData.token,
+                appData.userID,
+                setAppData
+              )
+            }
+          >
             Create Playlist
           </Button>
         </React.Fragment>
