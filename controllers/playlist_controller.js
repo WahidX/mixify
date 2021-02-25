@@ -20,6 +20,7 @@ let fetchPlaylistTracks = async (playlist_id, access_token) => {
 
     return response.data;
   } catch (err) {
+    console.log('Err: ', err);
     return null;
   }
 };
@@ -65,7 +66,7 @@ const storeTrack = async (trackItems) => {
   return tracks;
 };
 
-module.exports.getTracks = async (req, res) => {
+module.exports.submitPlaylist = async (req, res) => {
   try {
     if (req.body.playlists && req.body.access_token && req.body.userID) {
       let playlists = req.body.playlists.split('|');

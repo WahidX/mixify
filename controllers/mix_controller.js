@@ -5,6 +5,7 @@ const User = require('../models/user');
 const Track = require('../models/track');
 const Playlist = require('../models/playlist');
 const Mix = require('../models/Mix');
+const patterns = require('../utils/patterns');
 
 module.exports.getUsers = async (req, res) => {
   try {
@@ -36,57 +37,66 @@ module.exports.createMix = async (req, res) => {
   //   excludeExplicit
   // }
 
-  let mixRoom = await Mix.findById(req.body.linkid)
-    .populate({
-      path: 'users',
-      populate: {
-        path: 'playlists',
+  try {
+    let mixRoom = await Mix.findById(req.body.linkid)
+      .populate({
+        path: 'users',
         populate: {
-          path: 'tracks',
+          path: 'playlists',
+          populate: {
+            path: 'tracks',
+          },
         },
-      },
-    })
-    .populate({
-      path: 'creator',
-    });
+      })
+      .populate({
+        path: 'creator',
+      });
 
-  if (!mixRoom) {
-    return res.status(404).json({
-      message: 'No room found',
+    if (!mixRoom) {
+      return res.status(404).json({
+        message: 'No room found',
+      });
+    }
+
+    if (mixRoom.creator.spotify_id !== req.body.userID) {
+      return res.status(401).json({
+        message: 'Only Creator can create the playlist',
+      });
+    }
+
+    let userTracks = createUserTracksObj(mixRoom.users);
+
+    let newPlaylistTracks = patterns.patternExecute(
+      req.body.pattern,
+      userTracks
+    );
+
+    // create playlist
+    // add tracks to it
+
+    return res.status(200).json({
+      message: 'ok',
+    });
+  } catch (err) {
+    console.log('Err: ', err);
+    return res.status(501).json({
+      message: err,
     });
   }
+};
 
-  if (mixRoom.creator.spotify_id !== req.body.userID) {
-    return res.status(401).json({
-      message: 'Only Creator can create the playlist',
+let createUserTracksObj = (users) => {
+  let userTracks = {};
+  for (let i = 0; i < users.length; i++) {
+    let trackArr = [];
+    users[i].playlists.map((playlist) => {
+      playlist.tracks.map((track) => {
+        trackArr.push(track);
+      });
     });
+    userTracks[users[i].spotify_id] = trackArr;
   }
 
-  console.log(mixRoom.users);
-  patternExecute(req.body.pattern);
-
-  return res.status(200).json({
-    message: 'ok',
-  });
-};
-
-let patternExecute = (pattern) => {
-  const patterns = {
-    smart: smartPattern,
-    equal: equalPattern,
-    random: randomPattern,
-  };
-  patterns[pattern]();
-};
-
-let smartPattern = () => {
-  console.log('Smart');
-};
-
-let equalPattern = () => {
-  console.log('Equal');
-};
-
-let randomPattern = () => {
-  console.log('Random');
+  // console.log('userTracks: ', userTracks);
+  return userTracks;
 };

@@ -34,7 +34,7 @@ function Home(props) {
 
   // for invited ones
   useEffect(() => {
-    if (appData.linkid)
+    if (appData.linkid && appData.linkid !== 0)
       joinLinkHandler(appData.token, appData.linkid, setAppData);
   }, [appData.linkid]);
 

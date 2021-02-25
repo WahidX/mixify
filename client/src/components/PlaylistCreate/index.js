@@ -96,7 +96,11 @@ function PlaylistCreate(props) {
             onChange={(e) => setPattern(e.target.value)}
             className="patterns"
           >
-            <FormControlLabel value="smart" control={<Radio />} label="Smart" />
+            <FormControlLabel
+              value="popular"
+              control={<Radio />}
+              label="Popular"
+            />
             <FormControlLabel value="equal" control={<Radio />} label="Equal" />
             <FormControlLabel
               value="random"
