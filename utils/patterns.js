@@ -1,21 +1,28 @@
+const functions = require('./functions');
+
 module.exports.patternExecute = (pattern, userTracks) => {
   const patterns = {
     popular: popularPattern,
     equal: equalPattern,
     random: randomPattern,
+    smart: smartPattern,
   };
 
-  // sortTracksOnPopularity(userTracks);
-  // console.log('userTracks', userTracks);
+  let trackArr = patterns[pattern](userTracks);
 
-  let trackList = patterns[pattern](userTracks);
-  console.log(trackList);
-  return 'ok';
+  let trackList = [];
+  trackArr.map((track) => {
+    trackList.push(track.uri);
+  });
+
+  // console.log(trackList);
+
+  return trackList;
 };
 
 let popularPattern = (userTracks) => {
   // most popular, ..., less popular
-  allTracks = getAllTracks(userTracks);
+  allTracks = functions.getAllTracks(userTracks);
   allTracks.sort((a, b) => b.popularity - a.popularity);
 
   // taking first 100 tracks only
@@ -24,29 +31,21 @@ let popularPattern = (userTracks) => {
 };
 
 let equalPattern = (userTracks) => {
-  console.log('Equal');
+  functions.sortTracksOnPopularity(userTracks);
+  console.log('Equal: ', userTracks);
+  return userTracks;
 };
 
+// Absolute Random
 let randomPattern = (userTracks) => {
-  allTracks = getAllTracks(userTracks);
+  allTracks = functions.getAllTracks(userTracks);
 
   allTracks.sort(() => Math.random() - 0.5);
   return allTracks;
 };
 
-let getAllTracks = (userTracks) => {
-  allTracks = [];
-  for (let user in userTracks) {
-    allTracks.push(...userTracks[user]);
-  }
-  return allTracks;
-};
-
-let sortTracksOnPopularity = (userTracks) => {
-  for (let user in userTracks) {
-    let trackList = userTracks[user].sort(
-      (a, b) => b.popularity - a.popularity
-    );
-    userTracks[user] = trackList;
-  }
+let smartPattern = (userTracks) => {
+  console.log('smart');
+  // sort by frequency, popularity
+  return userTracks;
 };

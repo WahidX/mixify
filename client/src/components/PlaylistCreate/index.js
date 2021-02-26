@@ -101,6 +101,7 @@ function PlaylistCreate(props) {
               control={<Radio />}
               label="Popular"
             />
+            <FormControlLabel value="smart" control={<Radio />} label="Smart" />
             <FormControlLabel value="equal" control={<Radio />} label="Equal" />
             <FormControlLabel
               value="random"

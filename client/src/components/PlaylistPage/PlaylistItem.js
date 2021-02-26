@@ -6,10 +6,13 @@ function PlaylistItem(props) {
 
   //   console.log(playlist);
 
+  let imgUrl = '';
+  if (playlist.images.length > 0) imgUrl = playlist.images[0].url;
+
   return (
     <React.Fragment>
       <div class="playlist-item-container">
-        <img src={playlist.images[0].url} alt={playlist.name}></img>
+        <img src={imgUrl} alt={playlist.name}></img>
 
         <div className="items-mid">
           <Typography>{playlist.name}</Typography>
