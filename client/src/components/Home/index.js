@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, TextField } from '@material-ui/core';
-
+import { Button, IconButton, TextField, Typography } from '@material-ui/core';
+import './home.css';
 import { AppDataContext } from '../../contexts/AppDataContext';
 import urls from '../../utils/urls';
 import { Redirect } from 'react-router-dom';
 import { checkAuth } from '../../utils';
+import spotifyLogo from '../../static/spotifyLogo.png';
 import {
   createLinkHandler,
   joinLinkHandler,
@@ -34,8 +35,10 @@ function Home(props) {
 
   // for invited ones
   useEffect(() => {
-    if (appData.linkid && appData.linkid !== 0)
+    if (appData.linkid && appData.linkid !== '0') {
+      console.log('ok', appData.linkid);
       joinLinkHandler(appData.token, appData.linkid, setAppData);
+    }
   }, [appData.linkid]);
 
   if (appData.joined) {
@@ -43,11 +46,10 @@ function Home(props) {
   }
 
   return (
-    <div>
-      <h1>Home</h1>
+    <div id="home-container">
       {loading && 'loading'}
       {token ? (
-        <React.Fragment>
+        <div id="create-join-cont">
           <Button
             variant="outlined"
             disabled={loading}
@@ -56,27 +58,43 @@ function Home(props) {
             Create Party
           </Button>
 
-          <form>
-            <Button
-              variant="outlined"
-              disabled={loading}
-              onClick={() => joinLinkHandler(token, link, setAppData)}
-            >
-              Join Party
-            </Button>
-            <TextField
-              variant="filled"
-              label="Paste your link"
-              disabled={loading}
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-            />
-          </form>
-        </React.Fragment>
+          <div className="gap" />
+
+          <div className="gap">Or</div>
+
+          <Button
+            variant="outlined"
+            disabled={loading}
+            onClick={() => joinLinkHandler(token, link, setAppData)}
+          >
+            Join Party
+          </Button>
+          <TextField
+            variant="filled"
+            label="Paste your link"
+            disabled={loading}
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+          />
+        </div>
       ) : (
-        <a href={urls.loginSpotify(0)}>
-          <Button variant="outlined">connect your spotify</Button>
-        </a>
+        <React.Fragment>
+          <Typography variant="h2" align="center">
+            Connect With Spotify
+          </Typography>
+
+          <div className="gap" />
+
+          <IconButton className="connect-btn-container" disabled={loading}>
+            <a href={urls.loginSpotify(0)}>
+              <img
+                src={spotifyLogo}
+                className="connect-btn"
+                alt="connect-spotify"
+              />
+            </a>
+          </IconButton>
+        </React.Fragment>
       )}
     </div>
   );
