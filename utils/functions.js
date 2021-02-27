@@ -22,13 +22,12 @@ module.exports.sortTracksOnPopularity = (userTracks) => {
   }
 };
 
-// module.exports.sortTracksBy_Frequency_Popularity = (tracks) => {
-//   (a, b) {
-//     if (a.city === b.city) {
-//        // Price is only important when cities are the same
-//        return b.price - a.price;
-//     }
-//     return a.city > b.city ? 1 : -1;
-//  });
+module.exports.sortTracksBy_Frequency_Popularity = (allTracks) => {
+  allTracks.sort((a, b) => {
+    return a.frequency === b.frequency
+      ? b.popularity - a.popularity
+      : b.frequency - a.frequency;
+  });
 
-// }
+  return allTracks;
+};

@@ -103,11 +103,6 @@ function PlaylistCreate(props) {
             />
             <FormControlLabel value="smart" control={<Radio />} label="Smart" />
             <FormControlLabel value="equal" control={<Radio />} label="Equal" />
-            <FormControlLabel
-              value="random"
-              control={<Radio />}
-              label="Random"
-            />
           </RadioGroup>
           <div className="form-items">
             <Checkbox

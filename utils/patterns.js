@@ -4,7 +4,6 @@ module.exports.patternExecute = (pattern, userTracks) => {
   const patterns = {
     popular: popularPattern,
     equal: equalPattern,
-    random: randomPattern,
     smart: smartPattern,
   };
 
@@ -15,7 +14,7 @@ module.exports.patternExecute = (pattern, userTracks) => {
     trackList.push(track.uri);
   });
 
-  // console.log(trackArr, trackList);
+  console.log(trackArr);
 
   return trackList;
 };
@@ -37,16 +36,18 @@ let equalPattern = (userTracks) => {
   return userTracks;
 };
 
-// Absolute Random
-let randomPattern = (userTracks) => {
-  allTracks = functions.getAllTracks(userTracks)[0];
-
-  allTracks.sort(() => Math.random() - 0.5);
-  return allTracks;
-};
-
 let smartPattern = (userTracks) => {
   console.log('smart');
+  // consolidating all the tracks
+  let [allTracks, freqMap] = functions.getAllTracks(userTracks);
+
+  // inserting frequency in track object
+  allTracks.map((track) => {
+    track.frequency = freqMap[track._id];
+  });
+
   // sort by frequency, popularity
-  return userTracks;
+  let orderedTracks = functions.sortTracksBy_Frequency_Popularity(allTracks);
+
+  return orderedTracks;
 };
