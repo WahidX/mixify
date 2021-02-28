@@ -20,6 +20,7 @@ module.exports.sortTracksOnPopularity = (userTracks) => {
     );
     userTracks[user] = trackList;
   }
+  return userTracks;
 };
 
 module.exports.sortTracksBy_Frequency_Popularity = (allTracks) => {

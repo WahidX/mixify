@@ -31,9 +31,35 @@ let popularPattern = (userTracks) => {
 };
 
 let equalPattern = (userTracks) => {
-  functions.sortTracksOnPopularity(userTracks);
-  console.log('Equal: ', userTracks);
-  return userTracks;
+  let popularTracksPerUser = functions.sortTracksOnPopularity(userTracks);
+  let trackMap = {}; // to avoid duplicates
+  let trackArr = [];
+
+  let index = {};
+  for (let user in userTracks) {
+    index[user] = -1;
+  }
+
+  let over = false;
+  while (trackArr.length < 101 && !over) {
+    for (let user in popularTracksPerUser) {
+      let tracks = popularTracksPerUser[user];
+
+      while (index[user] + 1 < tracks.length) {
+        let track = tracks[++index[user]];
+        if (!trackMap[track._id]) {
+          trackMap[track._id] = true;
+          trackArr.push(track);
+          break;
+        }
+      }
+      over = over || index[user] + 1 === tracks.length;
+    }
+  }
+
+  console.log('Equal');
+
+  return trackArr;
 };
 
 let smartPattern = (userTracks) => {
