@@ -129,6 +129,7 @@ export const createMix = (
         return {
           ...prev,
           loading: false,
+          playlistUrl: response.data.playlistlink,
         };
       });
     })

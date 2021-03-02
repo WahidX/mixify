@@ -6,15 +6,12 @@ module.exports.patternExecute = (pattern, userTracks) => {
     equal: equalPattern,
     smart: smartPattern,
   };
-
   let trackArr = patterns[pattern](userTracks);
 
   let trackList = [];
   trackArr.map((track) => {
     trackList.push(track.uri);
   });
-
-  console.log(trackArr);
 
   return trackList;
 };

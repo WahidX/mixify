@@ -11,15 +11,18 @@
 }
 
 .connect-btn-container {
-  box-shadow: 0px 0px 10px 0px black;
+  box-shadow: 0px 0px 500px 0px #00bcd4;
 }
 
 .connect-btn {
-  width: 200px;
+  width: 250px;
 }
 
 #create-join-cont {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 500px 0px #00bcd4;
 }

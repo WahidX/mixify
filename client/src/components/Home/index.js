@@ -6,6 +6,7 @@ import urls from '../../utils/urls';
 import { Redirect } from 'react-router-dom';
 import { checkAuth } from '../../utils';
 import spotifyLogo from '../../static/spotifyLogo.png';
+import backgroundImage from '../../static/minimalBackground.jpg';
 import {
   createLinkHandler,
   joinLinkHandler,
@@ -51,7 +52,10 @@ function Home(props) {
       {token ? (
         <div id="create-join-cont">
           <Button
-            variant="outlined"
+            className="black-btn"
+            variant="contained"
+            size="large"
+            color="primary"
             disabled={loading}
             onClick={() => createLinkHandler(token, setAppData)}
           >
@@ -63,7 +67,10 @@ function Home(props) {
           <div className="gap">Or</div>
 
           <Button
-            variant="outlined"
+            className="black-btn"
+            variant="contained"
+            size="large"
+            color="primary"
             disabled={loading}
             onClick={() => joinLinkHandler(token, link, setAppData)}
           >
@@ -71,6 +78,7 @@ function Home(props) {
           </Button>
           <TextField
             variant="filled"
+            color="primary"
             label="Paste your link"
             disabled={loading}
             value={link}

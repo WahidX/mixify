@@ -6,12 +6,11 @@ const development = {
 };
 
 const production = {
-  name: process.env.SP_MXR,
+  name: 'production',
+  db: 'mixify-prod',
+  client_id: process.env.MXFY_CLIENT_ID,
+  client_secret: process.env.MXFY_CLIENT_SECRET,
 };
 
-// module.exports = development;
-
 module.exports =
-  eval(process.env.SP_MXR_ENVIRONMENT) == undefined
-    ? development
-    : eval(process.env.ACADEMIC_ENVIRONMENT);
+  eval(process.env.MXFY) == undefined ? development : eval(process.env.MXFY);

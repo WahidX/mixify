@@ -12,7 +12,7 @@ import PlaylistItem from './PlaylistItem';
 import { AppDataContext } from '../../contexts/AppDataContext';
 import { Link, Redirect } from 'react-router-dom';
 import { fetchPlaylists } from '../../adapters/playlistHandlers';
-import urls from '../../utils/urls';
+import InviteDiv from '../shared/InviteDiv';
 
 function PlayListPage(props) {
   const [appData, setAppData] = useContext(AppDataContext);
@@ -56,25 +56,13 @@ function PlayListPage(props) {
 
   return (
     <div id="playlist-page">
-      <div className="copy-div">
-        <Button
-          variant="contained"
-          onClick={() => navigator.clipboard.writeText(urls.roomUrl(linkid))}
-        >
-          Room URL
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => navigator.clipboard.writeText(linkid)}
-        >
-          Room CODE
-        </Button>
-      </div>
+      <InviteDiv linkid={linkid} />
 
       <div id="util-btns">
         <Button
           id="refresh-btn"
-          variant="outlined"
+          color="primary"
+          variant="contained"
           disabled={loading}
           onClick={() => fetchPlaylists(appData.token, setAppData)}
         >
@@ -85,7 +73,7 @@ function PlayListPage(props) {
           <Link to="/create">
             <Button
               id="create-mix-btn"
-              variant="outlined"
+              variant="contained"
               color="secondary"
               disabled={loading || !(selected.length > 0)}
               onClick={submitPlaylists}
@@ -97,7 +85,8 @@ function PlayListPage(props) {
 
         <Button
           id="clear-btn"
-          variant="outlined"
+          color="primary"
+          variant="contained"
           disabled={loading || selected.length === 0}
           onClick={() => setSelected([])}
         >
@@ -116,6 +105,7 @@ function PlayListPage(props) {
             <ListItemIcon>
               <Checkbox
                 edge="start"
+                color="primary"
                 checked={selected.indexOf(item.id) !== -1}
                 tabIndex={-1}
                 disableRipple

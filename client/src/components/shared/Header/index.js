@@ -4,8 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
 import './header.css';
 
@@ -17,7 +15,9 @@ export default function Header(props) {
       <AppBar position="static">
         <Toolbar id="header-container">
           <Link to="/">
-            <Typography variant="h6">Spotify-M1XER</Typography>
+            <Typography variant="h5">
+              MiXify <small>- Mix Spotify Playlists</small>
+            </Typography>
           </Link>
           <Button color="inherit">Room Name</Button>
         </Toolbar>

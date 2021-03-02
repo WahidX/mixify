@@ -13,6 +13,11 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  Slide,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { AppDataContext } from '../../contexts/AppDataContext';
@@ -22,9 +27,32 @@ import './playlistCreate.css';
 import { refreshRoom } from '../../adapters/mixRoomAdapters';
 import PersonIcon from '@material-ui/icons/Person';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import InviteDiv from '../shared/InviteDiv';
+import { makeStyles } from '@material-ui/core/styles';
+import LinkIcon from '@material-ui/icons/Link';
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import urls from '../../utils/urls';
 
+const useStyles = makeStyles({
+  textField: {
+    '& .MuiOutlinedInput-input': {
+      color: 'white',
+    },
+  },
+
+  radioGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+});
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 function PlaylistCreate(props) {
+  const classes = useStyles();
+
   const [appData, setAppData] = useContext(AppDataContext);
   const [pattern, setPattern] = useState('');
   const [playlistName, setPlaylistName] = useState('');
@@ -34,9 +62,16 @@ function PlaylistCreate(props) {
   let selected = appData.selected;
   let loading = appData.loading;
   let created = appData.created;
+  let playlistUrl = appData.playlistUrl;
 
   let members = appData.members || [];
   useEffect(() => {
+    submitPlaylists(
+      appData.selected,
+      appData.token,
+      appData.userID,
+      setAppData
+    );
     refreshRoom(linkid, setAppData);
   }, []);
 
@@ -46,27 +81,56 @@ function PlaylistCreate(props) {
 
   return (
     <div id="page-container">
-      <div className="copy-div">
-        <Button
-          variant="contained"
-          onClick={() => navigator.clipboard.writeText(urls.roomUrl(linkid))}
-        >
-          Room URL
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => navigator.clipboard.writeText(linkid)}
-        >
-          Room CODE
-        </Button>
-      </div>
+      <InviteDiv linkid={linkid} />
+
+      <Dialog open={playlistUrl} TransitionComponent={Transition} keepMounted>
+        <DialogTitle>{'Playlist created !'}</DialogTitle>
+
+        <DialogContent align="center">
+          <Button
+            variant="contained"
+            color="secondary"
+            endIcon={<LinkIcon />}
+            onClick={() => {
+              window.open(playlistUrl, '_blank');
+            }}
+          >
+            Check out Playlist
+          </Button>
+        </DialogContent>
+
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Start new Room
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            endIcon={<LocalCafeIcon />}
+            onClick={() => {
+              window.open('', '_blank');
+            }}
+          >
+            Buy me a coffee
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <div className="submit-box">
         <Typography variant="body1" align="center">
           {selected.length} playlist selected
         </Typography>
 
-        <Button
-          variant="outlined"
+        {/* <Button
+          variant="contained"
+          color="primary"
           onClick={() =>
             submitPlaylists(
               appData.selected,
@@ -78,12 +142,14 @@ function PlaylistCreate(props) {
           disabled={loading}
         >
           Submit
-        </Button>
+        </Button> */}
       </div>
 
       {created && (
         <React.Fragment>
           <TextField
+            error
+            className={classes.textField}
             variant="outlined"
             label="Playlist Name"
             value={playlistName}
@@ -91,10 +157,10 @@ function PlaylistCreate(props) {
           />
           Sorting Pattern :
           <RadioGroup
+            className={classes.radioGroup}
             name="pattern"
             value={pattern}
             onChange={(e) => setPattern(e.target.value)}
-            className="patterns"
           >
             <FormControlLabel
               value="popular"
@@ -104,20 +170,21 @@ function PlaylistCreate(props) {
             <FormControlLabel value="smart" control={<Radio />} label="Smart" />
             <FormControlLabel value="equal" control={<Radio />} label="Equal" />
           </RadioGroup>
-          <div className="form-items">
+          {/* <div className="form-items">
             <Checkbox
               value={excludeExplicit}
               onChange={() => setExcludeExplicit(!excludeExplicit)}
             />{' '}
             Exclude explicit contents
-          </div>
+          </div> */}
           <Button
-            variant="outlined"
-            color="secondary"
+            variant="contained"
+            color="primary"
+            disabled={playlistName.trim() === '' || pattern === ''}
             onClick={() =>
               createMix(
                 linkid,
-                playlistName,
+                playlistName.trim(),
                 pattern,
                 excludeExplicit,
                 appData.token,
@@ -134,7 +201,7 @@ function PlaylistCreate(props) {
       <div className="room-container">
         <div className="header">
           <div className="total">
-            <h1>Members &nbsp;</h1>
+            <Typography variant="h4">Members &nbsp;</Typography>
             <Badge badgeContent={members.length} color="primary">
               <PersonIcon />
             </Badge>
@@ -144,7 +211,7 @@ function PlaylistCreate(props) {
             disabled={loading}
             onClick={() => refreshRoom(linkid, setAppData)}
           >
-            <RefreshIcon />
+            <RefreshIcon color="primary" />
           </IconButton>
         </div>
 

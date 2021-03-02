@@ -1,13 +1,6 @@
-const axios = require('axios');
-const qs = require('qs');
-const utils = require('../configs/utils');
-const User = require('../models/user');
-const Track = require('../models/track');
-const Playlist = require('../models/playlist');
 const Mix = require('../models/Mix');
-const patterns = require('../utils/patterns');
-const { createPlaylist } = require('../adapters/createPlaylist');
-const { addItemsToPlaylist } = require('../adapters/addItems');
+const patterns = require('../PatternControllers/patterns');
+const playlistAdapters = require('../adapters/playlistAdapters');
 
 module.exports.getUsers = async (req, res) => {
   try {
@@ -71,12 +64,13 @@ module.exports.createMix = async (req, res) => {
     // generating the track list
     let userTracks = createUserTracksObj(mixRoom.users);
     let trackList = patterns.patternExecute(req.body.pattern, userTracks);
+    if (trackList.length === 0) throw 'No songs selected';
 
     // create playlist
-    let playlistData = await createPlaylist(
+    let playlistData = await playlistAdapters.createPlaylist(
       req.body.userID,
       req.body.access_token,
-      req.body.playlistName || 'Playlist by SpotifyMixer',
+      req.body.playlistName || '',
       req.body.playlistDescription || ''
     );
 
@@ -88,7 +82,7 @@ module.exports.createMix = async (req, res) => {
     console.log(':::::::::: Playlist Created ::::::::::', playlistData.id);
 
     // Add tracks to it
-    let addStatus = await addItemsToPlaylist(
+    let addStatus = await playlistAdapters.addItemsToPlaylist(
       req.body.access_token,
       playlistData.id,
       trackList
@@ -122,6 +116,5 @@ let createUserTracksObj = (users) => {
     userTracks[users[i].spotify_id] = trackArr;
   }
 
-  // console.log('userTracks: ', userTracks);
   return userTracks;
 };

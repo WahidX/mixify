@@ -1,4 +1,5 @@
 const env = require('../configs/environment');
+const utils = require('../configs/utils');
 
 module.exports.getDetails = (req, res) => {
   console.log();
@@ -12,21 +13,21 @@ module.exports.getDetails = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-  var scopes =
-    'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
-
-  const redirectUri = 'http://localhost:3000/';
+  var scopes = utils.scopes;
+  const redirect_uri = utils.urls.frontedHome();
   const linkid = req.params.linkid || 0;
 
   res.redirect(
-    'https://accounts.spotify.com/authorize' +
-      '?client_id=' +
-      env.client_id +
-      '&redirect_uri=' +
-      redirectUri +
-      '&scope=' +
-      encodeURIComponent(scopes) +
-      '&response_type=token' +
-      `&state=${linkid}`
+    utils.urls.spotifyAuthUrl(env.client_id, redirect_uri, scopes, linkid)
   );
 };
+
+// 'https://accounts.spotify.com/authorize' +
+// '?client_id=' +
+// env.client_id +
+// '&redirect_uri=' +
+// redirectUri +
+// '&scope=' +
+// encodeURIComponent(scopes) +
+// '&response_type=token' +
+// `&state=${linkid}`
