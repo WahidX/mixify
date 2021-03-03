@@ -24,6 +24,9 @@ const theme = createMuiTheme({
     secondary: {
       main: red[600],
     },
+    error: {
+      main: cyan[500],
+    },
   },
 });
 

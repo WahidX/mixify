@@ -6,6 +6,16 @@ const mixSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
+    status: {
+      type: String,
+      enum: ['active', 'complete'],
+      required: true,
+    },
+    playlist_link: {
+      type: String,
+      required: false,
+      default: '',
+    },
     users: [
       {
         type: mongoose.Schema.ObjectId,

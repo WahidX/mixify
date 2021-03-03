@@ -64,7 +64,7 @@ module.exports.createMix = async (req, res) => {
     // generating the track list
     let userTracks = createUserTracksObj(mixRoom.users);
     let trackList = patterns.patternExecute(req.body.pattern, userTracks);
-    if (trackList.length === 0) throw 'No songs selected';
+    if (trackList.length === 0) throw 'No song selected';
 
     // create playlist
     let playlistData = await playlistAdapters.createPlaylist(
@@ -91,6 +91,10 @@ module.exports.createMix = async (req, res) => {
     if (!addStatus) throw 'Internal Server Error';
 
     console.log(`:::::::::: ${trackList.length} Items Added ::::::::::`);
+
+    mixRoom.status = 'complete';
+    mixRoom.playlist_link = playlistData.external_urls.spotify;
+    mixRoom.save();
 
     return res.status(200).json({
       message: 'Playlist Created',

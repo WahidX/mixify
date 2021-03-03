@@ -13,6 +13,7 @@ import { AppDataContext } from '../../contexts/AppDataContext';
 import { Link, Redirect } from 'react-router-dom';
 import { fetchPlaylists } from '../../adapters/playlistHandlers';
 import InviteDiv from '../shared/InviteDiv';
+import DialogBox from '../shared/DialogBox';
 
 function PlayListPage(props) {
   const [appData, setAppData] = useContext(AppDataContext);
@@ -20,6 +21,7 @@ function PlayListPage(props) {
   const linkid = appData.linkid;
   let playlists = appData.playlists;
   let loading = appData.loading;
+  let playlistUrl = appData.playlistUrl;
 
   useEffect(() => {
     fetchPlaylists(appData.token, setAppData);
@@ -57,6 +59,8 @@ function PlayListPage(props) {
   return (
     <div id="playlist-page">
       <InviteDiv linkid={linkid} />
+
+      {playlistUrl && <DialogBox playlistUrl={playlistUrl} />}
 
       <div id="util-btns">
         <Button

@@ -11,6 +11,7 @@ import {
   createLinkHandler,
   joinLinkHandler,
 } from '../../adapters/linkHandlers';
+import DialogBox from '../shared/DialogBox';
 
 function Home(props) {
   const [appData, setAppData] = useContext(AppDataContext);
@@ -18,6 +19,7 @@ function Home(props) {
 
   let token = appData.token;
   let loading = appData.loading;
+  let playlistUrl = appData.playlistUrl;
   console.log(appData);
 
   useEffect(() => {

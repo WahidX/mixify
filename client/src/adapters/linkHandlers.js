@@ -67,6 +67,17 @@ export const joinLinkHandler = (token, link, setAppData) => {
 
   axios(config)
     .then((response) => {
+      console.log('response: ', response.data);
+      if (response.data.message === 'Room ended') {
+        setAppData((prev) => {
+          return {
+            ...prev,
+            linkid: link,
+            playlistUrl: response.data.playlist_link,
+          };
+        });
+      }
+
       setAppData((prev) => {
         return {
           ...prev,
@@ -74,6 +85,7 @@ export const joinLinkHandler = (token, link, setAppData) => {
           loading: false,
           joined: true,
           userID: response.data.userID,
+          creator: response.data.creator,
         };
       });
     })

@@ -36,6 +36,7 @@ module.exports.createLink = async (req, res) => {
     let user = await storeUser(data);
     let newMix = await Mix.create({
       creator: user._id,
+      status: 'active',
       explicit_filter: user.explicit_filter,
       users: [user._id],
     });
@@ -61,24 +62,33 @@ module.exports.joinLink = async (req, res) => {
     let linkid = req.params.linkid;
     if (!linkid) throw 'No Link found';
 
-    let mix = await Mix.findById(linkid);
+    let mix = await Mix.findById(linkid).populate('creator');
 
-    // checking if the user already joined
+    // not joined yet
     if (mix.users.indexOf(user._id) === -1) {
-      // not joined yet
+      if (mix.status === 'complete') throw 'Access denied';
       mix.users.push(user._id);
       mix.explicit_filter = mix.explicit_filter && user.explicit_filter;
       mix.save();
+    } else {
+      // already in the room
+      if (mix.status === 'complete') {
+        return res.status(200).json({
+          message: 'Room ended',
+          playlist_link: mix.playlist_link,
+        });
+      }
     }
 
     return res.status(200).json({
       message: 'Joined party!',
       userID: user.spotify_id,
+      creator: mix.creator,
     });
   } catch (err) {
     console.log('ERR: ', err);
     return res.status(501).json({
-      message: 'Invalid/expired link',
+      message: err,
     });
   }
 };

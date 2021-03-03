@@ -13,11 +13,6 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
-  Slide,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { AppDataContext } from '../../contexts/AppDataContext';
@@ -29,9 +24,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import InviteDiv from '../shared/InviteDiv';
 import { makeStyles } from '@material-ui/core/styles';
-import LinkIcon from '@material-ui/icons/Link';
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-import urls from '../../utils/urls';
+import DialogBox from '../shared/DialogBox';
 
 const useStyles = makeStyles({
   textField: {
@@ -44,10 +37,6 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
-});
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function PlaylistCreate(props) {
@@ -83,45 +72,7 @@ function PlaylistCreate(props) {
     <div id="page-container">
       <InviteDiv linkid={linkid} />
 
-      <Dialog open={playlistUrl} TransitionComponent={Transition} keepMounted>
-        <DialogTitle>{'Playlist created !'}</DialogTitle>
-
-        <DialogContent align="center">
-          <Button
-            variant="contained"
-            color="secondary"
-            endIcon={<LinkIcon />}
-            onClick={() => {
-              window.open(playlistUrl, '_blank');
-            }}
-          >
-            Check out Playlist
-          </Button>
-        </DialogContent>
-
-        <DialogActions>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            Start new Room
-          </Button>
-
-          <Button
-            variant="contained"
-            color="primary"
-            endIcon={<LocalCafeIcon />}
-            onClick={() => {
-              window.open('', '_blank');
-            }}
-          >
-            Buy me a coffee
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {playlistUrl && <DialogBox playlistUrl={playlistUrl} />}
 
       <div className="submit-box">
         <Typography variant="body1" align="center">
