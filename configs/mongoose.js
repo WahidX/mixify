@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const env = require('./environment');
 
 mongoose.connect(
-  `mongodb+srv://droidx:dV9pdoogCVkEYYTl@cluster0.g8vvd.mongodb.net/${env.db}?retryWrites=true&w=majority`,
+  `mongodb+srv://droidx:${env.MXFY_DP_PASS}@cluster0.g8vvd.mongodb.net/${env.db}?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

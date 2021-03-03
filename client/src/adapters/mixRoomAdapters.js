@@ -22,6 +22,7 @@ export const refreshRoom = (id, setAppData) => {
           ...prev,
           loading: false,
           members: response.data.users,
+          playlistUrl: response.data.playlistUrl,
         };
       });
     })

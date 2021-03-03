@@ -50,7 +50,8 @@ function PlaylistCreate(props) {
   const linkid = appData.linkid;
   let selected = appData.selected;
   let loading = appData.loading;
-  let created = appData.creator.spotify_id === appData.userID;
+  let created =
+    appData.creator && appData.creator.spotify_id === appData.userID;
   let playlistUrl = appData.playlistUrl;
 
   let members = appData.members || [];

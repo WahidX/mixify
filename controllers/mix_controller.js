@@ -13,6 +13,7 @@ module.exports.getUsers = async (req, res) => {
     return res.status(200).json({
       message: 'ok',
       users: mix.users,
+      playlistUrl: mix.playlist_link,
     });
   } catch (err) {
     console.log('Err: ', err);

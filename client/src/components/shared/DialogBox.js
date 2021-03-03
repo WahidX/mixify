@@ -52,10 +52,13 @@ function DialogBox(props) {
           color="primary"
           endIcon={<LocalCafeIcon />}
           onClick={() => {
-            window.open('', '_blank');
+            window.open(
+              'upi://pay?pa=7602306212@axl&pn=X&mc=0000&mode=02&purpose=00',
+              '_blank'
+            );
           }}
         >
-          Buy me a coffee
+          Buy me a Coffee!
         </Button>
       </DialogActions>
     </Dialog>
