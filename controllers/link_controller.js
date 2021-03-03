@@ -45,6 +45,7 @@ module.exports.createLink = async (req, res) => {
       message: 'New Mix Created',
       linkid: newMix._id,
       userID: user.spotify_id,
+      creatot: user,
     });
   } catch (err) {
     console.log('ERR: ', err);
