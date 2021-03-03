@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.002b28ba.chunk.css",
+    "main.js": "/static/js/main.ad120f73.chunk.js",
+    "main.js.map": "/static/js/main.ad120f73.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f970cef7.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f970cef7.js.map",
+    "static/js/2.8f562450.chunk.js": "/static/js/2.8f562450.chunk.js",
+    "static/js/2.8f562450.chunk.js.map": "/static/js/2.8f562450.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.002b28ba.chunk.css.map": "/static/css/main.002b28ba.chunk.css.map",
+    "static/js/2.8f562450.chunk.js.LICENSE.txt": "/static/js/2.8f562450.chunk.js.LICENSE.txt",
+    "static/media/spotifyLogo.4bf5bfa8.png": "/static/media/spotifyLogo.4bf5bfa8.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f970cef7.js",
+    "static/js/2.8f562450.chunk.js",
+    "static/css/main.002b28ba.chunk.css",
+    "static/js/main.ad120f73.chunk.js"
+  ]
+}

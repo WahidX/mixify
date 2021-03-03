@@ -11,6 +11,7 @@ const production = {
   db: 'mixify-prod',
   client_id: process.env.MXFY_CLIENT_ID,
   client_secret: process.env.MXFY_CLIENT_SECRET,
+  redirect_uri: process.env.MXFY_REDIRECT,
   MXFY_DP_PASS: process.env.MXFY_DP_PASS,
 };
 

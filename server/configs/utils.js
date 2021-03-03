@@ -22,7 +22,7 @@ module.exports.urls = {
 
   frontedHome: () => {
     return env.name === 'production'
-      ? 'http://prod-frontend-url.com'
+      ? env.redirect_uri
       : 'http://localhost:3000/';
   },
 };
