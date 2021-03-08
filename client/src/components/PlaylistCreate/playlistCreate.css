@@ -1,55 +1,55 @@
 .side-bar-page {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
 }
 
 #page-container {
-  width: 50%;
-  min-width: 600px;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  margin-top: 10px;
-  padding: 20px 20px;
-  border-radius: 20px;
-  box-shadow: 0px 0px 500px 0px #00bcd4;
+	width: 50%;
+	min-width: 400px;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	margin-top: 10px;
+	padding: 20px 20px;
+	border-radius: 20px;
+	box-shadow: 0px 0px 500px 0px #00bcd4;
 }
 
 #page-container > * {
-  margin: 10px 0px;
+	margin: 10px 0px;
 }
 
 .submit-box {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
 }
 
 .form-items {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .room-container {
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 0px 3px 0px #00bcd4;
-  border-radius: 4px;
-  padding: 10px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0px 0px 3px 0px #00bcd4;
+	border-radius: 4px;
+	padding: 10px;
 }
 
 .room-container .header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10px;
 }
 
 .room-container .header .total {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
