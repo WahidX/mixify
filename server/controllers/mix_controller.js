@@ -38,12 +38,12 @@ module.exports.createMix = async (req, res) => {
     let mixRoom = await Mix.findById(req.body.linkid)
       .populate({
         path: 'users',
-        populate: {
-          path: 'playlists',
-          populate: {
-            path: 'tracks',
-          },
-        },
+        // populate: {
+        //   path: 'playlists',
+        //   populate: {
+        //     path: 'tracks',
+        //   },
+        // },
       })
       .populate({
         path: 'creator',
@@ -109,17 +109,25 @@ module.exports.createMix = async (req, res) => {
   }
 };
 
+// let createUserTracksObj = (users) => {
+//   let userTracks = {};
+//   for (let i = 0; i < users.length; i++) {
+//     let trackArr = [];
+//     users[i].playlists.map((playlist) => {
+//       playlist.tracks.map((track) => {
+//         trackArr.push(track);
+//       });
+//     });
+//     userTracks[users[i].spotify_id] = trackArr;
+//   }
+
+//   return userTracks;
+// };
+
 let createUserTracksObj = (users) => {
   let userTracks = {};
-  for (let i = 0; i < users.length; i++) {
-    let trackArr = [];
-    users[i].playlists.map((playlist) => {
-      playlist.tracks.map((track) => {
-        trackArr.push(track);
-      });
-    });
-    userTracks[users[i].spotify_id] = trackArr;
-  }
-
+  users.forEach((user) => {
+    userTracks[user.spotify_id] = JSON.parse(user.tracks);
+  });
   return userTracks;
 };

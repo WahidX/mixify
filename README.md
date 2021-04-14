@@ -21,7 +21,7 @@ coming soon
 
 # Its Live and usable!
 
-Checkout [Mixify][https://mixify-xd.web.app/]
+Checkout [Mixify](https://mixify-xd.web.app/)
 
 ## Contributing
 

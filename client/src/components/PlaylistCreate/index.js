@@ -153,7 +153,7 @@ function PlaylistCreate(props) {
 								<ListItem key={user._id}>
 									<Avatar alt={user.name} src={user.img} />
 									&nbsp; {user.name} &nbsp;
-									{user.playlists.length > 0 && <Button disabled={true}>submitted</Button>}
+									{user.tracks.length > 0 && <Button disabled={true}>submitted</Button>}
 								</ListItem>
 								<Divider />
 							</React.Fragment>

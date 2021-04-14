@@ -53,8 +53,8 @@ module.exports.submitPlaylist = async (req, res) => {
   try {
     if (!(req.body.playlists && req.body.access_token && req.body.userID))
       throw 'Invalid Request';
-    let playlists = req.body.playlists.split('|');
 
+    let playlists = req.body.playlists.split('|');
     let user = await User.findOne({
       spotify_id: req.body.userID,
     });
@@ -74,12 +74,13 @@ module.exports.submitPlaylist = async (req, res) => {
         // Instead of storing the tracks separately we will store them for the user only
         tracks = [...tracks, playlistData['items']];
 
-        let tracks = await storeTrack(playlistData);
-        let playlist = await storePlaylist(playlists[i]);
+        // Storing every element
+        // let tracks = await storeTrack(playlistData);
+        // let playlist = await storePlaylist(playlists[i]);
 
-        playlist.tracks = tracks;
-        playlist.save();
-        user.playlists.push(playlist._id);
+        // playlist.tracks = tracks;
+        // playlist.save();
+        // user.playlists.push(playlist._id);
       }
     }
 
