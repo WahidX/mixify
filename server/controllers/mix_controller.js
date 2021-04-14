@@ -7,7 +7,7 @@ module.exports.getUsers = async (req, res) => {
     let mix = await Mix.findById(req.params.id).populate({
       path: 'users',
       populate: 'User',
-      select: '_id name img playlists',
+      select: '_id name img playlists tracks',
     });
 
     return res.status(200).json({

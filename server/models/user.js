@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
         ref: 'Playlist',
       },
     ],
+    tracks: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

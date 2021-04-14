@@ -18,6 +18,7 @@ let storeUser = async (userResponse) => {
       });
     } else {
       user.playlists = [];
+      user.tracks = '';
       user.save();
     }
 

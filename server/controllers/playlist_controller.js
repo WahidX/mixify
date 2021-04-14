@@ -24,7 +24,7 @@ const storePlaylist = async (playlistID) => {
 
 const storeTrack = async (trackItems) => {
   try {
-    // "items":[{"track":{"explicit":true,"popularity":57,"uri":"spotify:track:1dzwFgBlZNxt28aQOinNGn"}}
+    // "items":[{"track":{"explicit":true,"popularity":57,"uri":"spotify:track:1dzwFgBlZNxt28aQOinNGn"}}]
     let trackArr = trackItems.items;
     let tracks = [];
     for (let i = 0; i < trackArr.length; i++) {
@@ -60,13 +60,20 @@ module.exports.submitPlaylist = async (req, res) => {
     });
 
     if (!user) throw 'Internal Server Error';
+
     user.playlists = [];
+    let tracks = [];
+
     for (let i = 0; i < playlists.length; i++) {
       let playlistData = await playlistAdapters.fetchPlaylistTracks(
         playlists[i],
         req.body.access_token
       );
+
       if (playlistData) {
+        // Instead of storing the tracks separately we will store them for the user only
+        tracks = [...tracks, playlistData['items']];
+
         let tracks = await storeTrack(playlistData);
         let playlist = await storePlaylist(playlists[i]);
 
@@ -75,6 +82,8 @@ module.exports.submitPlaylist = async (req, res) => {
         user.playlists.push(playlist._id);
       }
     }
+
+    user.tracks = JSON.stringify(tracks);
 
     user.save(); // saving the playlists
 
