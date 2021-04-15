@@ -11,9 +11,9 @@ let storeUser = async (userResponse) => {
     if (!user) {
       user = await User.create({
         spotify_id: userResponse.id,
-        name: userResponse.display_name,
+        name: userResponse.display_name || 'unknown user',
         img: userResponse.images.length !== 0 ? userResponse.images[0].url : '', //img can be empty
-        explicit_content: userResponse.explicit_content.filter_enabled,
+        // explicit_content: userResponse.explicit_content.filter_enabled,
         playlists: [],
       });
     } else {
@@ -38,7 +38,7 @@ module.exports.createLink = async (req, res) => {
     let newMix = await Mix.create({
       creator: user._id,
       status: 'active',
-      explicit_filter: user.explicit_filter,
+      // explicit_filter: user.explicit_filter,
       users: [user._id],
     });
 
@@ -70,7 +70,7 @@ module.exports.joinLink = async (req, res) => {
     if (mix.users.indexOf(user._id) === -1) {
       if (mix.status === 'complete') throw 'Access denied';
       mix.users.push(user._id);
-      mix.explicit_filter = mix.explicit_filter && user.explicit_filter;
+      // mix.explicit_filter = mix.explicit_filter && user.explicit_filter;
       mix.save();
     } else {
       // already in the room
