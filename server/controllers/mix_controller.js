@@ -64,7 +64,11 @@ module.exports.createMix = async (req, res) => {
 
     // generating the track list
     let userTracks = createUserTracksObj(mixRoom.users);
+
+    // console.log('userTracks: ', userTracks);
+
     let trackList = patterns.patternExecute(req.body.pattern, userTracks);
+
     if (trackList.length === 0) throw 'No song selected';
 
     // create playlist
@@ -81,6 +85,7 @@ module.exports.createMix = async (req, res) => {
     }
 
     console.log(':::::::::: Playlist Created ::::::::::', playlistData.id);
+    console.log('Tracklist: ', trackList);
 
     // Add tracks to it
     let addStatus = await playlistAdapters.addItemsToPlaylist(

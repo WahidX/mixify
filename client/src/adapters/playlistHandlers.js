@@ -72,7 +72,7 @@ export const submitPlaylists = (playlists, token, userID, setAppData) => {
 
 	axios(config)
 		.then((response) => {
-			console.log("res: ", response.data);
+			// console.log("res: ", response.data);
 			setAppData((prev) => {
 				return {
 					...prev,
@@ -118,7 +118,7 @@ export const createMix = (linkid, playlistName, pattern, excludeExplicit, token,
 
 	axios(config)
 		.then((response) => {
-			console.log("res: ", response.data);
+			// console.log("res: ", response.data);
 			setAppData((prev) => {
 				return {
 					...prev,

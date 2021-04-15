@@ -23,6 +23,7 @@ import "./playlistCreate.css";
 import { refreshRoom } from "../../adapters/mixRoomAdapters";
 import PersonIcon from "@material-ui/icons/Person";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import InviteDiv from "../shared/InviteDiv";
 import { makeStyles } from "@material-ui/core/styles";
 import DialogBox from "../shared/DialogBox";
@@ -61,7 +62,7 @@ function PlaylistCreate(props) {
 		refreshRoom(linkid, setAppData);
 	}, []);
 
-	console.log(appData);
+	// console.log(appData);
 
 	if (!linkid) {
 		return <Redirect to="/" />;
@@ -95,7 +96,7 @@ function PlaylistCreate(props) {
         </Button> */}
 			</div>
 
-			{created && (
+			{created ? (
 				<React.Fragment>
 					<TextField
 						error
@@ -112,12 +113,12 @@ function PlaylistCreate(props) {
 						<FormControlLabel value="equal" control={<Radio />} label="Equal" />
 					</RadioGroup>
 					{/* <div className="form-items">
-            <Checkbox
-              value={excludeExplicit}
-              onChange={() => setExcludeExplicit(!excludeExplicit)}
-            />{' '}
-            Exclude explicit contents
-          </div> */}
+						<Checkbox
+						value={excludeExplicit}
+						onChange={() => setExcludeExplicit(!excludeExplicit)}
+						/>{' '}
+						Exclude explicit contents
+					</div> */}
 					<Button
 						variant="contained"
 						color="primary"
@@ -129,6 +130,10 @@ function PlaylistCreate(props) {
 						{readyToCreate ? "Create Playlist" : <CircularProgress color="primary">{" Wait while submitting Playlist"} </CircularProgress>}
 					</Button>
 				</React.Fragment>
+			) : (
+				<Typography variant="body1" align="center">
+					Wait for the leader and refresh
+				</Typography>
 			)}
 
 			<div className="room-container">
@@ -140,7 +145,7 @@ function PlaylistCreate(props) {
 						</Badge>
 					</div>
 
-					<Button disabled={loading} onClick={() => refreshRoom(linkid, setAppData)}>
+					<Button variant="contained" disabled={loading} onClick={() => refreshRoom(linkid, setAppData)}>
 						<RefreshIcon color="primary" /> {"Refresh"}
 					</Button>
 				</div>
@@ -153,7 +158,7 @@ function PlaylistCreate(props) {
 								<ListItem key={user._id}>
 									<Avatar alt={user.name} src={user.img} />
 									&nbsp; {user.name} &nbsp;
-									{user.tracks.length > 0 && <Button disabled={true}>submitted</Button>}
+									{user.tracks.length > 0 ? <CheckCircleIcon color="primary" /> : <CircularProgress />}
 								</ListItem>
 								<Divider />
 							</React.Fragment>

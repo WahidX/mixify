@@ -72,8 +72,11 @@ module.exports.submitPlaylist = async (req, res) => {
 
       if (playlistData) {
         // Instead of storing the tracks separately we will store them for the user only
-        tracks = [...tracks, playlistData['items']];
 
+        // "items":[{"track":{"explicit":true,"popularity":57,"uri":"spotify:track:1dzwFgBlZNxt28aQOinNGn"}}]
+        playlistData['items'].forEach((trackObj) => {
+          tracks.push(trackObj['track']);
+        });
         // Storing every element
         // let tracks = await storeTrack(playlistData);
         // let playlist = await storePlaylist(playlists[i]);

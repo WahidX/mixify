@@ -18,8 +18,9 @@ module.exports.patternExecute = (pattern, userTracks) => {
 
 let popularPattern = (userTracks) => {
   // most popular, ..., less popular
+  console.log('userTracks : ', userTracks);
   allTracks = functions.getAllTracks(userTracks)[0];
-  console.log(allTracks);
+  console.log('AllTracks: ', allTracks);
   allTracks.sort((a, b) => b.popularity - a.popularity);
   console.log(allTracks);
   // taking first 100 tracks only
@@ -44,8 +45,8 @@ let equalPattern = (userTracks) => {
 
       while (index[user] + 1 < tracks.length) {
         let track = tracks[++index[user]];
-        if (!trackMap[track._id]) {
-          trackMap[track._id] = true;
+        if (!trackMap[track.uri]) {
+          trackMap[track.uri] = true;
           trackArr.push(track);
           break;
         }
@@ -66,7 +67,7 @@ let smartPattern = (userTracks) => {
 
   // inserting frequency in track object
   allTracks.map((track) => {
-    track.frequency = freqMap[track._id];
+    track.frequency = freqMap[track.uri];
   });
 
   // sort by frequency, popularity

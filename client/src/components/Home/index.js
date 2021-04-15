@@ -16,7 +16,7 @@ function Home(props) {
 	let token = appData.token;
 	let loading = appData.loading;
 	let playlistUrl = appData.playlistUrl;
-	console.log(appData);
+	// console.log(appData);
 
 	useEffect(() => {
 		// getting token from redirect url
@@ -35,7 +35,7 @@ function Home(props) {
 	// for invited ones
 	useEffect(() => {
 		if (appData.linkid && appData.linkid !== "0") {
-			console.log("ok", appData.linkid);
+			// console.log("ok", appData.linkid);
 			joinLinkHandler(appData.token, appData.linkid, setAppData);
 		}
 	}, [appData.linkid]);

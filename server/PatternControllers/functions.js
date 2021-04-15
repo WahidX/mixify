@@ -4,10 +4,10 @@ module.exports.getAllTracks = (userTracks) => {
 
   for (let user in userTracks) {
     userTracks[user].map((track) => {
-      if (!trackMap[track._id]) {
+      if (!trackMap[track.uri]) {
         allTracks.push(track);
-        trackMap[track._id] = 1;
-      } else trackMap[track._id]++;
+        trackMap[track.uri] = 1;
+      } else trackMap[track.uri]++;
     });
   }
   return [allTracks, trackMap];

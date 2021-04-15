@@ -11,13 +11,9 @@ Mixify is a web app for mixing spotify playlists with based on some patterns and
 - Spotify Web API
 - MongoDB
 
-# Screenshots
+# Demo Video
 
-coming soon
-
-# Video Illustration
-
-coming soon
+[![Youtube](https://img.youtube.com/vi/1dqA5lOa0OA/maxresdefault.jpg)](https://youtu.be/1dqA5lOa0OA)
 
 # Its Live and usable!
 
