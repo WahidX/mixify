@@ -62,7 +62,7 @@ This app merges spotify playlists with some patterns.
 
 - One can use it to rearrange his/her playlist/playlists as per the patterns.
 - One can create a room and ask friends to join and then can create a merged collaborative playlist which can be modified by the users afterwards(within spotify)\
-  > So, I got this idea in a trip with my friends where it was becoming hard to find a playlist satisfying everyone's music taste XD.
+> So, I got this idea in a trip with my friends where it was becoming hard to find a playlist satisfying everyone's music taste XD.
 
 # Its Live! Checkout
 
