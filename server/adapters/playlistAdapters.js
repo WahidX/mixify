@@ -28,8 +28,8 @@ module.exports.createPlaylist = async (
   playlistDescription
 ) => {
   var data = {
-    name: playlistName || 'Playlist by SpotifyMixer',
-    description: playlistDescription + '  -Made with spotifyMixer',
+    name: playlistName || 'Mixify-Playlist',
+    description: playlistDescription + '  -Made with Mixify',
     collaborative: true,
     public: false,
   };

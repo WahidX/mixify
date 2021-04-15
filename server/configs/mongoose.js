@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
 const env = require('./environment');
 
-mongoose.connect(
-  `mongodb+srv://droidx:${env.MXFY_DP_PASS}@cluster0.g8vvd.mongodb.net/${env.db}?retryWrites=true&w=majority`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+let mongodbUri =
+  env.name === 'development'
+    ? `mongodb://localhost/${env.db}`
+    : `mongodb+srv://droidx:${env.MXFY_DP_PASS}@cluster0.g8vvd.mongodb.net/${env.db}?retryWrites=true&w=majority`;
+
+mongoose.connect(mongodbUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error connecting mongodb'));
@@ -17,5 +19,3 @@ db.once('open', function () {
 });
 
 module.exports = db;
-
-// dV9pdoogCVkEYYTl
